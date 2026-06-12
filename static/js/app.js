@@ -180,17 +180,28 @@ function initMentorCharts() {
         type: 'bar',
         data: {
           labels: Object.keys(data.category || {}),
-          datasets: [{ label: 'Submissions', data: Object.values(data.category || {}), backgroundColor: '#7C3AED' }],
+          datasets: [{
+  label: 'Submissions',
+  data: Object.values(data.category || {}),
+  backgroundColor: '#5B8DEF'
+}],
         },
         options: { responsive: true, maintainAspectRatio: false },
       });
       const deptEl = document.getElementById('mentorDeptChart');
       if (deptEl) {
         new Chart(deptEl, {
-          type: 'pie',
+          type: 'doughnut',
           data: {
             labels: Object.keys(data.department || {}),
-            datasets: [{ data: Object.values(data.department || {}), backgroundColor: ['#7C3AED', '#A855F7', '#C084FC', '#E9D5FF'] }],
+            datasets: [{ data: Object.values(data.department || {}), backgroundColor: [
+  '#FF8FAB',
+  '#72DDF7',
+  '#F9C74F',
+  '#90BE6D',
+  '#C77DFF',
+  '#F9844A'
+] }],
           },
           options: { responsive: true, maintainAspectRatio: false },
         });

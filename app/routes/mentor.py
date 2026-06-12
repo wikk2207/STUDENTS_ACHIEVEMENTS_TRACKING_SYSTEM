@@ -442,7 +442,34 @@ def export_department_pdf():
 @bp.route("/leaderboard")
 @mentor_required
 def leaderboard():
-    return render_template("mentor/leaderboard.html")
+
+    top = []
+
+    for s in User.query.filter_by(role="student").all():
+
+        # Skip Demo Student
+        if s.email == "student@example.com":
+            continue
+
+        ach = Achievement.query.filter_by(
+            student_id=s.id,
+            status="Approved"
+        ).all()
+
+        pts = calculate_achievement_points(ach)
+
+        top.append({
+            "student": s,
+            "points": pts,
+            "count": len(ach)
+        })
+
+    top.sort(key=lambda x: x["points"], reverse=True)
+
+    return render_template(
+        "mentor/leaderboard.html",
+        leaderboard=top
+    )
 
 
 def _conversation_id(first_user_id, second_user_id):

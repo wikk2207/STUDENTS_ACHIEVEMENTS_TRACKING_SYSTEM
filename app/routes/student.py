@@ -544,6 +544,19 @@ def public_portfolio():
         points=points,
     )
 
+@bp.route("/certificate/<int:cert_id>")
+@student_required
+def view_certificate(cert_id):
+
+    cert = Certificate.query.get_or_404(cert_id)
+
+    path = os.path.join("static", cert.file_path)
+
+    return send_file(
+        path,
+        as_attachment=False
+    )
+
 
 def _attach_certificate(parent, file, achievement_id=None, activity_id=None):
     # Nothing uploaded

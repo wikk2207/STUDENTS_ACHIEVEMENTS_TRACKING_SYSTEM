@@ -186,6 +186,26 @@ class ProfileForm(FlaskForm):
     department = StringField("Department", validators=[Optional()])
     year = StringField("Year", validators=[Optional()])
     roll_number = StringField("Roll Number", validators=[Optional()])
+    mentor_designation = StringField(
+        "Current Role/Designation (e.g., Data Scientist, Software Engineer)",
+        validators=[Optional(), Length(max=120)],
+    )
+    mentor_organization = StringField(
+        "Organization/Company",
+        validators=[Optional(), Length(max=120)],
+    )
+    mentor_experience_years = StringField(
+        "Years of Experience",
+        validators=[Optional(), Length(max=40)],
+    )
+    mentor_skills = TextAreaField(
+        "Skills/Expertise",
+        validators=[Optional(), Length(max=2000)],
+    )
+    mentor_bio = TextAreaField(
+        "Short Bio/About Me",
+        validators=[Optional(), Length(max=3000)],
+    )
     profile_photo = FileField(
         "Profile Photo",
         validators=[FileAllowed(["jpg", "jpeg", "png"], "Images only")],
