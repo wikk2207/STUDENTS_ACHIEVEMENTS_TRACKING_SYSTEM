@@ -91,19 +91,30 @@ def send_otp_email(user, code, purpose="verification"):
 
     try:
         body = render_template(
-            "emails/otp.html",
-            user=user,
-            code=code,
-            purpose=purpose,
+        "emails/otp.html",
+        user=user,
+        code=code,
+        purpose=purpose,
         )
+
         sender = current_app.config.get("MAIL_DEFAULT_SENDER") or current_app.config.get("MAIL_USERNAME")
+
         msg = Message(
-            subject=subject,
-            recipients=[user.email.strip()],
-            html=body,
-            sender=sender,
+        subject=subject,
+        recipients=[user.email.strip()],
+        html=body,
+        sender=sender,
         )
+
+        current_app.logger.info("Attempting SMTP connection...")
+        current_app.logger.info(f"MAIL_SERVER={current_app.config.get('MAIL_SERVER')}")
+        current_app.logger.info(f"MAIL_USERNAME={current_app.config.get('MAIL_USERNAME')}")
+        current_app.logger.info(f"MAIL_PASSWORD_EXISTS={bool(current_app.config.get('MAIL_PASSWORD'))}")
+
         mail.send(msg)
+
+        current_app.logger.info("Email sent successfully")
+
         session.pop("dev_otp_code", None)
         current_app.logger.info("OTP email sent to %s", user.email)
         return True, f"OTP sent to {user.email}. Check your inbox and spam folder."
