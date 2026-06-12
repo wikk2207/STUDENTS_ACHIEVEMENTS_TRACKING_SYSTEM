@@ -8,9 +8,10 @@ from app import create_app, db
 
 app = create_app()
 
-MENTOR_EMAIL = "binaryai0010@gmail.com"
-MENTOR_PASSWORD = "narayan22"
 
+
+MENTOR_EMAIL = os.getenv("MENTOR_EMAIL")
+MENTOR_PASSWORD = os.getenv("MENTOR_PASSWORD")
 
 @app.cli.command("seed")
 def seed_data():
