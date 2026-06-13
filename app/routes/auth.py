@@ -63,7 +63,16 @@ from app.utils.helpers import log_action, save_upload
 
 
 bp = Blueprint("auth", __name__)
+bp = Blueprint("auth", __name__)
 
+@bp.route("/check-mentor")
+def check_mentor():
+    user = User.query.filter_by(email="binaryai0010@gmail.com").first()
+
+    if not user:
+        return "Mentor NOT found"
+
+    return f"Found: {user.email}, role={user.role}"
 
 
 
