@@ -550,7 +550,15 @@ def view_certificate(cert_id):
 
     cert = Certificate.query.get_or_404(cert_id)
 
-    path = os.path.join("static", cert.file_path)
+    path = os.path.join(
+        current_app.static_folder,
+        cert.file_path.replace("uploads/", "")
+    )
+
+    current_app.logger.info(f"Certificate path: {path}")
+
+    if not os.path.exists(path):
+        return f"Certificate file not found: {path}", 404
 
     return send_file(
         path,
