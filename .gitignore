@@ -3,8 +3,9 @@ __pycache__/
 *.pyc
 .env
 saams.db
-static/uploads/*
-!static/uploads/.gitkeep
+# Temporary for Render testing
+# static/uploads/*
+# !static/uploads/.gitkeep
 instance/
 .migrations/
 *.db
