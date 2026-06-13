@@ -1,9 +1,11 @@
+import code
 import random
 import string
 from datetime import datetime, timedelta
 
 from flask import current_app, render_template, session
 from flask_mail import Message
+from streamlit import user
 
 from app import db, mail
 from app.models import OTPCode
@@ -81,13 +83,15 @@ def send_otp_email(user, code, purpose="verification"):
     elif purpose == "mentor_login":
         subject = "SAAMS Mentor Security OTP"
 
-    if not is_mail_configured():
+    # TEMPORARY TEST - DISABLE EMAIL COMPLETELY
+    if True:
         store_dev_otp(code)
-        current_app.logger.info("DEV OTP for %s: %s", user.email, code)
+        current_app.logger.info("DEV OTP MODE ENABLED")
+        current_app.logger.info("OTP for %s: %s", user.email, code)
+
         return False, (
-            f"Email is not configured. Your verification code is: {code} "
-            "(also shown below — valid 10 minutes)"
-        )
+        f"Development OTP: {code}"
+    )
 
     try:
         body = render_template(
