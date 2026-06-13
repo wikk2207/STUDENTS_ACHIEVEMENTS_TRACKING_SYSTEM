@@ -687,3 +687,16 @@ def cert_debug():
     file_name={cert.file_name}<br>
     file_path={cert.file_path}
     """
+@bp.route("/all-users")
+def all_users():
+    from app.models import User
+
+    users = User.query.all()
+
+    result = []
+    for u in users:
+        result.append(
+            f"ID={u.id}, Email={u.email}, Role={u.role}"
+        )
+
+    return "<br>".join(result)
