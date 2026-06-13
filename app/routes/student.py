@@ -552,7 +552,7 @@ def view_certificate(cert_id):
 
     path = os.path.join(
         current_app.static_folder,
-        cert.file_path.replace("uploads/", "")
+        cert.file_path.replace
     )
 
     current_app.logger.info(f"Certificate path: {path}")

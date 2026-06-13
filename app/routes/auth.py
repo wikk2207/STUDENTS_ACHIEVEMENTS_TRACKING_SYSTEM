@@ -662,3 +662,28 @@ def profile():
 def db_check():
     from flask import current_app
     return current_app.config["SQLALCHEMY_DATABASE_URI"]
+@bp.route("/db-debug")
+def db_debug():
+    from app.models import User, Certificate
+
+    users = User.query.count()
+    certs = Certificate.query.count()
+
+    return f"""
+    DB: {current_app.config['SQLALCHEMY_DATABASE_URI']}<br>
+    Users: {users}<br>
+    Certificates: {certs}
+    """
+@bp.route("/cert-debug")
+def cert_debug():
+    from app.models import Certificate
+
+    cert = Certificate.query.first()
+
+    if not cert:
+        return "No certificates"
+
+    return f"""
+    file_name={cert.file_name}<br>
+    file_path={cert.file_path}
+    """
