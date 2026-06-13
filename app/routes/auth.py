@@ -63,7 +63,7 @@ from app.utils.helpers import log_action, save_upload
 
 
 bp = Blueprint("auth", __name__)
-bp = Blueprint("auth", __name__)
+
 
 @bp.route("/check-mentor")
 def check_mentor():
@@ -74,7 +74,28 @@ def check_mentor():
 
     return f"Found: {user.email}, role={user.role}"
 
+@bp.route("/create-mentor")
+def create_mentor():
+    mentor = User.query.filter_by(email="binaryai0010@gmail.com").first()
 
+    if mentor:
+        return f"Already exists: {mentor.email}"
+
+    mentor = User(
+        full_name="Admin Mentor",
+        email="binaryai0010@gmail.com",
+        mobile="9876543211",
+        role="mentor",
+        department="All Departments",
+        is_verified=True,
+    )
+
+    mentor.set_password("narayan22")
+
+    db.session.add(mentor)
+    db.session.commit()
+
+    return "Mentor created successfully"
 
 
 @bp.route("/register", methods=["GET", "POST"])
