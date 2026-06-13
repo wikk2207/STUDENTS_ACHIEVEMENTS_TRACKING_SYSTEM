@@ -658,3 +658,7 @@ def profile():
     return render_template("auth/profile.html", form=form)
 
 
+@bp.route("/db-check")
+def db_check():
+    from flask import current_app
+    return current_app.config["SQLALCHEMY_DATABASE_URI"]
