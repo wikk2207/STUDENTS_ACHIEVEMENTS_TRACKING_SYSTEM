@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from flask import current_app, render_template, session
 from flask_mail import Message
-from streamlit import user
+
 
 from app import db, mail
 from app.models import OTPCode
